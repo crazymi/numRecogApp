@@ -35,6 +35,7 @@ bool HelloWorld::init()
 
     // initialize variables
 	_state = -1;
+	_flag = 1;
 	_flagArray = (int*)malloc(sizeof(int)*BOX_X*BOX_Y);
 	memset(_flagArray, 0, sizeof(int)*BOX_X*BOX_Y);
 	_boxArray.clear();
@@ -88,7 +89,7 @@ bool HelloWorld::init()
 
 	auto listener = EventListenerTouchOneByOne::create();
 	listener->onTouchBegan = CC_CALLBACK_2(HelloWorld::onTouchBegan, this);
-	//listener->onTouchMoved = CC_CALLBACK_2(HelloWorld::onTouchMoved, this);
+	listener->onTouchMoved = CC_CALLBACK_2(HelloWorld::onTouchMoved, this);
 	this->getEventDispatcher()->addEventListenerWithFixedPriority(listener, 1);
 
 	this->setKeypadEnabled(true);
@@ -114,7 +115,7 @@ void HelloWorld::createBoxArray()
 	}
 }
 
-void HelloWorld::checkTouchBox(Vec2 touchPoint)
+void HelloWorld::checkTouchBox(Vec2 touchPoint, int _flag)
 {
 	Sprite* box;
 	std::vector<Sprite*>::const_iterator it = _boxArray.begin();
@@ -122,17 +123,21 @@ void HelloWorld::checkTouchBox(Vec2 touchPoint)
 	for (int i = 0; i < _boxArray.size(); i++)
 	{
 		box = (Sprite*)(*it);
-		if (box->getBoundingBox().containsPoint(touchPoint) && _state != i)
+		if (box->getBoundingBox().containsPoint(touchPoint))
 		{
-			if (_flagArray[i] == 0)
+			if (_flag == 1 || _flag == 0 && _state != i)
 			{
-				box->setOpacity(255);
-				_flagArray[i] = 1;
-			}
-			else
-			{
-				box->setOpacity(40);
-				_flagArray[i] = 0;
+				if (_flagArray[i] == 0)
+				{
+					box->setOpacity(255);
+					_flagArray[i] = 1;
+				}
+				else
+				{
+					box->setOpacity(40);
+					_flagArray[i] = 0;
+				}
+				_state = i;
 			}
 			break;
 		}
@@ -178,6 +183,9 @@ void HelloWorld::onKeyReleased(EventKeyboard::KeyCode keycode, Event* unused_eve
 bool HelloWorld::onTouchBegan(Touch* touch, Event *unused_event)
 {
 	Vec2 touchPoint = touch->getLocation();
+
+	_flag = 1;
+
 	if (_okButton->getBoundingBox().containsPoint(touchPoint))
 	{
 		okButtonCallBack();
@@ -196,7 +204,7 @@ bool HelloWorld::onTouchBegan(Touch* touch, Event *unused_event)
 	}
 	else
 	{
-		checkTouchBox(touchPoint);
+		checkTouchBox(touchPoint, _flag);
 	}
 	return true;
 }
@@ -204,7 +212,8 @@ bool HelloWorld::onTouchBegan(Touch* touch, Event *unused_event)
 void HelloWorld::onTouchMoved(Touch* touch, Event *unused_event)
 {
 	Vec2 touchPoint = touch->getLocation();
-	checkTouchBox(touchPoint);
+	_flag = 0;
+	checkTouchBox(touchPoint, _flag);
 }
 
 void HelloWorld::onTouchEnded(Touch* touch, Event *unused_event)

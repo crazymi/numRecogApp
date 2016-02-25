@@ -24,6 +24,7 @@ private:
 	ui::EditBox* _editBox;
 	int* _flagArray;
 	int _state;
+	int _flag; // 1 : Began, 0 : Moved
 
 public:
     static cocos2d::Scene* createScene();
@@ -35,7 +36,7 @@ public:
 
 	void createBoxArray();
 	void resetBoxArray();
-	void checkTouchBox(Vec2 touchPoint);
+	void checkTouchBox(Vec2 touchPoint, int _flag);
 	int okButtonCallBack();
 
     // a selector callback
