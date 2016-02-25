@@ -2,16 +2,26 @@
 #define __HELLOWORLD_SCENE_H__
 
 #include "cocos2d.h"
+#include "NeuralNetworkAlgorithm.h"
+#include "ui\UIEditBox\UIEditBox.h"
 
 #define BOX_X 3
 #define BOX_Y 5
 
 USING_NS_CC;
 
-class HelloWorld : public cocos2d::Layer
+class HelloWorld : public cocos2d::Layer, public cocos2d::ui::EditBoxDelegate
 {
 private:
-	Size _winSize = Director::getInstance()->getWinSize();
+	NeuralNetworkAlgorithm* _myNeuron;
+	Vec2 _origin; // = Director::getInstance()->getVisibleOrigin();
+	Size _winSize; // = Director::getInstance()->getWinSize();
+	Vector<Sprite*> _boxArray;
+	Sprite* _okButton;
+	Sprite* _resetButton;
+	Label* _answerLabel;
+	ui::EditBox* _editBox;
+	int* _flagArray;
 	int _state;
 
 public:
@@ -20,12 +30,12 @@ public:
     virtual bool init();
 	// implement the "static create()" method manually
 	CREATE_FUNC(HelloWorld);
-
 	
-	Vector<Sprite*> boxArray;
 
 	void createBoxArray();
+	void resetBoxArray();
 	void checkTouchBox(Vec2 touchPoint);
+	int okButtonCallBack();
 
     // a selector callback
     void menuCloseCallback(cocos2d::Ref* pSender);
@@ -34,7 +44,13 @@ public:
 	bool onTouchBegan(Touch* touch, Event *unused_event);
 	void onTouchMoved(Touch* touch, Event *unused_event);
 	void onTouchEnded(Touch* touch, Event *unused_event);
-	void onTouchCancelled(Touch* touch, Event *unused_event);    
+	void onTouchCancelled(Touch* touch, Event *unused_event);
+
+protected:
+	virtual void editBoxEditingDidBegin(ui::EditBox* editBox);
+	virtual void editBoxEditingDidEnd(ui::EditBox* editBox);
+	virtual void editBoxTextChanged(ui::EditBox* editBox, const std::string& text);
+	virtual void editBoxReturn(ui::EditBox* editBox);
 	
 };
 
