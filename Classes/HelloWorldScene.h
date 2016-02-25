@@ -10,7 +10,7 @@
 
 USING_NS_CC;
 
-class HelloWorld : public cocos2d::Layer, public cocos2d::ui::EditBoxDelegate
+class HelloWorld : public cocos2d::Layer
 {
 private:
 	NeuralNetworkAlgorithm* _myNeuron;
@@ -19,6 +19,7 @@ private:
 	Vector<Sprite*> _boxArray;
 	Sprite* _okButton;
 	Sprite* _resetButton;
+	Sprite* _numButton;
 	Label* _answerLabel;
 	ui::EditBox* _editBox;
 	int* _flagArray;
@@ -45,13 +46,6 @@ public:
 	void onTouchMoved(Touch* touch, Event *unused_event);
 	void onTouchEnded(Touch* touch, Event *unused_event);
 	void onTouchCancelled(Touch* touch, Event *unused_event);
-
-protected:
-	virtual void editBoxEditingDidBegin(ui::EditBox* editBox);
-	virtual void editBoxEditingDidEnd(ui::EditBox* editBox);
-	virtual void editBoxTextChanged(ui::EditBox* editBox, const std::string& text);
-	virtual void editBoxReturn(ui::EditBox* editBox);
-	
 };
 
 #endif // __HELLOWORLD_SCENE_H__

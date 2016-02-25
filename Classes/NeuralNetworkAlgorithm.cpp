@@ -128,7 +128,7 @@ void NeuralNetworkAlgorithm::basicLearn() {//기본 모델 학습(선택사항)
 	int ar8[15] = { 1,1,1,1,0,1,1,1,1,1,0,1,1,1,1 };
 	int ar9[15] = { 1,1,1,1,0,1,1,1,1,0,0,1,1,1,1 };
 
-	for (int j = 0; j < 100; j++) {
+	for (int j = 0; j < 1000; j++) {
 		getNumber(ar0);
 		getWeight(ar0, 0);
 		getNumber(ar1);
@@ -151,24 +151,3 @@ void NeuralNetworkAlgorithm::basicLearn() {//기본 모델 학습(선택사항)
 		getWeight(ar9, 9);
 	}
 }
-
-/*
-int main() {//예상 시나리오
-	int ar[15] = { 1,1,0,
-		0,0,1,
-		0,1,0,
-		0,0,1,
-		1,1,0 };//이런 input이 오면
-
-	init_weight();//weight을 초기화후
-	basicLearn();//기본 모델을 할껀지 말껀지 선택사항
-
-	printf("%d", getNumber(ar, 3, 5));//어떤 숫자인지 구분하고
-
-	getWeight(ar, 3);//학습 시키고
-
-	printf("%d", getNumber(ar, 3, 5));//잘 학습했는지 확인, 끝
-
-	return 0;
-}
-*/
