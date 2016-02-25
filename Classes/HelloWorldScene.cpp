@@ -91,6 +91,8 @@ bool HelloWorld::init()
 	//listener->onTouchMoved = CC_CALLBACK_2(HelloWorld::onTouchMoved, this);
 	this->getEventDispatcher()->addEventListenerWithFixedPriority(listener, 1);
 
+	this->setKeypadEnabled(true);
+
     return true;
 }
 
@@ -163,6 +165,14 @@ int HelloWorld::okButtonCallBack()
 	std::string s(ost.str());
 	_answerLabel->setString(s);
 	return ans;
+}
+
+void HelloWorld::onKeyReleased(EventKeyboard::KeyCode keycode, Event* unused_event)
+{
+	if (keycode == EventKeyboard::KeyCode::KEY_BACK)
+	{
+		Director::getInstance()->end();
+	}
 }
 
 bool HelloWorld::onTouchBegan(Touch* touch, Event *unused_event)

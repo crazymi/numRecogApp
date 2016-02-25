@@ -41,6 +41,7 @@ public:
     // a selector callback
     void menuCloseCallback(cocos2d::Ref* pSender);
     
+	void onKeyReleased(EventKeyboard::KeyCode keycode, Event* unused_event);
 	
 	bool onTouchBegan(Touch* touch, Event *unused_event);
 	void onTouchMoved(Touch* touch, Event *unused_event);
